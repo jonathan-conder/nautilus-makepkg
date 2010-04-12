@@ -1,0 +1,30 @@
+<gconfschemafile>
+	<schemalist>
+
+		<schema>
+			<key>/schemas/apps/nautilus-makepkg/enabled</key>
+			<applyto>/apps/nautilus-makepkg/enabled</applyto>
+			<owner>nautilus-makepkg</owner>
+			<type>bool</type>
+			<default>true</default>
+			<locale name="C">
+				<short>Enable makepkg in the nautilus context menu</short>
+				<long>Add a "Make Package" option to the menu that appears after right-cicking a PKGBUILD file</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/nautilus-makepkg/options</key>
+			<applyto>/apps/nautilus-makepkg/options</applyto>
+			<owner>nautilus-makepkg</owner>
+			<type>string</type>
+			<default>-scf</default>
+			<locale name="C">
+				<short>Options to pass to makepkg</short>
+				<long>Command-line options to pass to makepkg, see the makepkg(8) manpage for details</long>
+			</locale>
+		</schema>
+
+	</schemalist>
+</gconfschemafile>
+

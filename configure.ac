@@ -1,0 +1,51 @@
+AC_INIT([nautilus-makepkg], [2.30.0])
+AC_CONFIG_SRCDIR([src/nautilus-extension.c])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_HEADERS([config.h])
+AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-bzip2])
+AM_MAINTAINER_MODE
+
+AC_PROG_CC
+AM_PROG_CC_C_O
+AC_DISABLE_STATIC
+AC_PROG_LIBTOOL
+
+AC_SUBST([CFLAGS])
+AC_SUBST([CPPFLAGS])
+AC_SUBST([LDFLAGS])
+
+AH_TEMPLATE([GETTEXT_PACKAGE], [Package name for gettext])
+GETTEXT_PACKAGE="$PACKAGE_TARNAME"
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], "$GETTEXT_PACKAGE")
+AC_SUBST([GETTEXT_PACKAGE])
+AM_GLIB_GNU_GETTEXT
+IT_PROG_INTLTOOL([0.35.0])
+
+# Earlier versions probably work, but I'm not sure
+GLIB_REQUIRED=[2.24.0]
+GCONF_REQUIRED=[2.28.0]
+GNOME_REQUIRED=[2.30.0]
+NAUTILUS_REQUIRED=[2.30.0]
+
+AM_PATH_GLIB_2_0([$GLIB_REQUIRED], [], [AC_MSG_ERROR([Unable to find glib on your system, please make sure glib2 is installed and up-to-date.])], [gmodule gobject])
+AC_SUBST([GLIB_CFLAGS])
+AC_SUBST([GLIB_LIBS])
+
+PKG_CHECK_MODULES([GCONF], [gconf-2.0 >= $GCONF_REQUIRED])
+AC_SUBST([GCONF_CFLAGS])
+AC_SUBST([GCONF_LIBS])
+AM_GCONF_SOURCE_2
+AC_PATH_PROG(GCONFTOOL, gconftool-2)
+
+PKG_CHECK_MODULES([GNOME], [gnome-desktop-2.0 >= $GNOME_REQUIRED])
+AC_SUBST([GNOME_CFLAGS])
+AC_SUBST([GNOME_LIBS])
+
+PKG_CHECK_MODULES([NAUTILUS], [libnautilus-extension >= $NAUTILUS_REQUIRED])
+AC_SUBST([NAUTILUS_CFLAGS])
+AC_SUBST([NAUTILUS_LIBS])
+NAUTILUS_EXTENSION_DIR=`pkg-config --variable=extensiondir libnautilus-extension`
+AC_SUBST([NAUTILUS_EXTENSION_DIR])
+
+AC_CONFIG_FILES([Makefile src/makepkg src/$PACKAGE_TARNAME.schemas src/Makefile po/Makefile.in])
+AC_OUTPUT

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+@prefix@/bin/makepkg "$@"
+echo -en "\e[1;32m==>\e[1;0m\e[1;1m Press any key to close.\e[1;0m"
+read -rsn1
